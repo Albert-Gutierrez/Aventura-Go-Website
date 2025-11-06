@@ -26,18 +26,16 @@
                 <h2 class="fw-bold">INICIO DE SESIÓN</h2>
                 <p>Por favor ingresa tu usuario y contraseña para iniciar sesión</p>
 
-                <form>
-                    <input type="email" class="form-control mb-3 rounded-pill" placeholder="Correo" required>
+                <form action="iniciarSesion" method="POST">
+                    <input type="email" name="email" class="form-control mb-3 rounded-pill" placeholder="Correo" required>
 
                     <div class="password-container position-relative mb-3">
-                        <input type="password" class="form-control rounded-pill" id="password" placeholder="Contraseña"
-                            required>
-                        <i class="bi bi-eye-fill position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
-                            id="togglePassword" style="cursor: pointer;"></i>
+                        <input type="password" name="contrasena" class="form-control rounded-pill" id="password" placeholder="Contraseña" required>
+                        <i class="bi bi-eye-fill position-absolute top-50 end-0 translate-middle-y me-3 text-secondary" id="togglePassword" style="cursor: pointer;"></i>
                     </div>
 
                     <p class="forgot-password">
-                        <a href="resetPassword.html">¿Olvidaste tu contraseña?</a>
+                        <a href="public/resetPassword.html">¿Olvidaste tu contraseña?</a>
                     </p>
 
                     <button type="submit" class="btn w-100 rounded-pill fw-bold text-white"

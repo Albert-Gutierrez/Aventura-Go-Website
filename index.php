@@ -10,7 +10,7 @@ $requestUri = $_SERVER['REQUEST_URI'];
 $request = str_replace('/aventura_go', '', $requestUri);
 
 //Quitar parametros tipo ?id=123
-$request = strtok($request, '/');
+$request = strtok($request, '?');
 
 //Quitar la barra final (si existe)
 $request = rtrim($request, '/');
@@ -24,13 +24,18 @@ switch ($request) {
         require BASE_PATH . '/app/views/website/index.html';
         break;
 
+//inicio rutas login
     case '/login':
-        require BASE_PATH . '/app/views/auth/login.html';
+        require BASE_PATH . '/app/views/auth/login.php';
+        break;    
+    case '/iniciarSesion':
+        require BASE_PATH . '/app/controllers/loginController.php';
         break;
+//fin rutas login
+
     default:
     require BASE_PATH . '/app/views/auth/error404.html';
     break;
 
 }
-
 ?>
