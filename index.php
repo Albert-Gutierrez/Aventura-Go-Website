@@ -1,7 +1,7 @@
 <?php
 //index.php - Router principal en larabel se tiene un archivo por cada carpeta de views
 
-define('BASE_PATH', __DIR__);
+require_once __DIR__ . '/config/config.php';
 
 //OBTENER LA URI ACTUAL (por ejemplo: aventura_go/login)
 $requestUri = $_SERVER['REQUEST_URI'];
@@ -21,17 +21,30 @@ if ($request === '') $request = '/';
 //enrutamiento basico
 switch ($request) {
     case '/':
-        require BASE_PATH . '/app/views/website/index.html';
+        require BASE_PATH . '/app/views/website/index.html'; //redirige a la pagina de inicio
         break;
 
 //inicio rutas login
     case '/login':
-        require BASE_PATH . '/app/views/auth/login.php';
+        require BASE_PATH . '/app/views/auth/login.php'; //redirige a el login 
         break;    
-    case '/iniciarSesion':
-        require BASE_PATH . '/app/controllers/loginController.php';
+    case '/iniciar-sesion':
+        require BASE_PATH . '/app/controllers/loginController.php'; //redirige al inicio de sesion
         break;
 //fin rutas login
+
+//........................inicio rutas administrador
+        case '/administrador/dashboard':
+        require BASE_PATH . '/app/views/dashboard/administrador/administrador.php';  //redirige al panel de administrador
+        break;
+
+        case '/administrador/registrar-proveedor':
+        require BASE_PATH . '/app/views/dashboard/administrador/registrar_proveedor.php';  //redirige al perfil de usuario de administrador
+        break;
+
+
+    //fin rutas administrador
+
 
     default:
     require BASE_PATH . '/app/views/auth/error404.html';

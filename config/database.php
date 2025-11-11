@@ -32,8 +32,8 @@ class conexion {
 }
 
 //en resumen:
-//la clase guarda las credenciales de forma segur
-//el constructor abr la conexion automaticamente.
+//la clase guarda las credenciales de forma segura
+//el constructor abre la conexion automaticamente.
 //this permite acceder a las variables internas de la clase.
 //getConexion() nos devuelve la conexion para poder ejecutar consultas.
 //de esta forma el codigo queda mas limpio, reutilizable y facil de mantener

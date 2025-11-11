@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         'rol' => $resultado['rol']
     ];
 
-    mostrarSweetAlert('success', 'Bienvenido', 'inicio de sesion exitoso. Redirigiendo...', '/aventura_go/');
+    mostrarSweetAlert('success', 'Bienvenido', 'inicio de sesion exitoso. Redirigiendo...', '/aventura_go/administrador/dashboard');
     exit();
 
 } else{
@@ -44,9 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     exit();
 }
 
-/**
- * Función para imprimir SweetAlert dinámico con estilo SENA
- */
+/**  * Función para imprimir SweetAlert dinámico con estilo SENA */
 function mostrarSweetAlert($tipo, $titulo, $mensaje, $redirect = null) {
     echo "
     <html>

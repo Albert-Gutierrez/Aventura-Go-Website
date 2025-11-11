@@ -18,14 +18,14 @@ class login {
             $resultado->bindParam(':correo', $correo); //tema de seguridad, evita sql inyection
             $resultado->execute();
 
-            $user = $resultado->fetch();
+            $user = $resultado->fetch(); //se utiliza el fetch para separar por tildes y comas para poderlos manipular ya que el string o la  cadena los datos vienen juntos
 
             if (!$user){
                 return['error' => 'Usuario no encontrado o inactivo'];
             }
 
             //verificar la contrseña encriptada
-            if (!password_verify($clave, $user['clave'])) {
+            if (!password_verify($clave, $user['clave'])) { //se verifica la contraseña encriptada
                 return ['error' => 'Contraseña incorrecta'];
             }
 

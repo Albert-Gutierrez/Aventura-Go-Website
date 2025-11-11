@@ -392,7 +392,11 @@ form #perfil p {
 
 .modo-oscuro .info {
     background: #000000;
-    color: #FFFFFF;
+    color: #000000c6;
+}
+
+.modo-oscuro .resumen-reservas{
+    background: #5f5f5f;
 }
 
 .modo-oscuro form input {
