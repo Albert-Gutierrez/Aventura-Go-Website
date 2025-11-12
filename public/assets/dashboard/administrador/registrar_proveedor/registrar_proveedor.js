@@ -1,115 +1,90 @@
-// Variable que controla en qué paso del formulario estamos
 let currentStep = 1;
 
-// Función para mostrar un paso específico del formulario
+// Mostrar paso
 function showStep(step) {
-    const steps = document.querySelectorAll('.step-content'); // Todos los pasos de contenido
-    const circles = document.querySelectorAll('.step'); // (Si usas círculos/indicadores)
+    const steps = document.querySelectorAll(".step-content");
+    const circles = document.querySelectorAll(".step");
 
-    // Quita la clase 'active' de todos los pasos
-    steps.forEach(s => s.classList.remove('active'));
-    circles.forEach(c => c.classList.remove('active'));
+    steps.forEach(s => s.classList.remove("active"));
+    circles.forEach(c => c.classList.remove("active"));
 
-    // Activa únicamente el paso actual
-    document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
+    document.querySelector(`.step-content[data-step="${step}"]`).classList.add("active");
+    const currentCircle = document.querySelector(`.step[data-step="${step}"]`);
+    if (currentCircle) currentCircle.classList.add("active");
 
-    // Mostrar u ocultar el botón "Atrás"
-    document.getElementById('prevBtn').style.display =
-        step === 1 ? 'none' : 'inline-block';
+    // Botón atrás
+    document.getElementById("prevBtn").style.display = step === 1 ? "none" : "inline-block";
 
-    // Cambia texto del botón siguiente según si es el último paso
-    document.getElementById('nextBtn').innerHTML =
-        step === 4 ? 'Registrar ✔️' : 'Siguiente ➜';
+    const nextBtn = document.getElementById("nextBtn");
+
+    // Si es el paso final → pasa a "Registrar"
+    if (step === 4) {
+        nextBtn.innerHTML = `Registrar <i class="fas fa-check"></i>`;
+        nextBtn.type = "submit"; // ✅ Aquí ya envía
+        loadPreview(); // ✅ cargar vista previa
+    } else {
+        nextBtn.innerHTML = `Siguiente <i class="fas fa-arrow-right"></i>`;
+        nextBtn.type = "button"; // ✅ NO envía aún
+    }
 }
 
-// Controlador del cambio de paso (Siguiente / Anterior)
+// Avanzar / retroceder
 function changeStep(direction) {
-    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    event.preventDefault();
 
-    // Si va hacia adelante, primero valida el paso actual
     if (direction === 1 && !validateStep(currentStep)) return;
 
-    currentStep += direction; // Suma o resta 1 al paso
+    currentStep += direction;
+    if (currentStep < 1) currentStep = 1;
+    if (currentStep > 4) currentStep = 4;
 
-    // Si ya pasó el último paso, pedir confirmación y enviar
-    if (currentStep > 4) {
-
-        Swal.fire({
-            title: '¿Confirmar registro?',
-            text: "Se guardará la información del proveedor.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, registrar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-
-            // Solo envía el formulario si el usuario confirma
-            if (result.isConfirmed) {
-                document.getElementById("formProveedor").submit();
-            }
-        });
-
-        return;
-    }
-
-    // Si ingresó al último paso, carga vista previa
-    if (currentStep === 4) loadPreview();
-
-    // Mostrar paso actual
     showStep(currentStep);
 }
 
-// Validación básica: verifica que los campos requeridos no estén vacíos
+// Validar campos requeridos por paso
 function validateStep(step) {
     const stepContent = document.querySelector(`.step-content[data-step="${step}"]`);
     const inputs = stepContent.querySelectorAll("input[required], select[required], textarea[required]");
 
     for (let input of inputs) {
-        // Si el campo está vacío, marca error y detiene el avance
         if (!input.value.trim()) {
             input.classList.add("is-invalid");
             input.focus();
             return false;
-        } else {
-            input.classList.remove("is-invalid");
         }
+        input.classList.remove("is-invalid");
     }
-
-    return true; // Si todo OK, puede continuar
+    return true;
 }
 
-// Carga datos en la vista previa del último paso
+// Cargar datos en vista previa (Paso 4)
 function loadPreview() {
-    // Datos generales
-    document.getElementById('prev-empresa').textContent = empresa.value;
-    document.getElementById('prev-nit').textContent = nit.value;
-    document.getElementById('prev-representante').textContent = representante.value;
-    document.getElementById('prev-email').textContent = email.value;
+    document.getElementById("prev-empresa").textContent = empresa.value;
+    document.getElementById("prev-nit").textContent = nit.value;
+    document.getElementById("prev-representante").textContent = representante.value;
+    document.getElementById("prev-email").textContent = email.value;
+    document.getElementById("prev-telefono").textContent = telefono.value;
 
-    // Actividades seleccionadas (checkboxes)
     let actividades = [];
     document.querySelectorAll('input[name="actividades[]"]:checked')
         .forEach(el => actividades.push(el.value));
 
-    document.getElementById('prev-actividades').textContent =
-        actividades.join(", ") || "-";
-
-    // Otros datos
-    document.getElementById('prev-capacidad').textContent = capacidad.value;
-    document.getElementById('prev-ubicacion').textContent = `${ciudad.value}, ${departamento.value}`;
-    document.getElementById('prev-descripcion').textContent = descripcion.value || "-";
-    document.getElementById('prev-cobertura').textContent = cobertura.value || "-";
+    document.getElementById("prev-actividades").textContent = actividades.join(", ") || "-";
+    document.getElementById("prev-ubicacion").textContent = `${ciudad.value}, ${departamento.value}`;
+    document.getElementById("prev-descripcion").textContent = descripcion.value || "-";
 }
 
-// Inicializa el formulario mostrando el paso 1
+// Iniciar
 showStep(currentStep);
 
-// Mensaje cuando el usuario confirma datos en el último paso
-document.getElementById("confirmarDatosBtn").addEventListener("click", function () {
-    Swal.fire({
-        icon: 'success',
-        title: 'Datos Confirmados',
-        text: 'Ahora haz clic en "Registrar" para guardar la información.',
-        confirmButtonText: 'Entendido'
-    });
+// Acción del botón Next / Registrar
+document.getElementById("nextBtn").addEventListener("click", function (e) {
+
+    // Si NO estamos en el paso final → avanzar
+    if (currentStep < 4) {
+        e.preventDefault();
+        changeStep(1);
+    }
+
+    // Si estamos en paso 4, deja que el submit funcione normal ✅
 });

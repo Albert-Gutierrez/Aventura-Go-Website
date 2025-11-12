@@ -120,10 +120,6 @@ include_once __DIR__ . '/../../layouts/header_administrador.php';
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-12 mb-3">
-                                    <label class="form-label">Capacidad Máxima *</label>
-                                    <input type="number" name="capacidad" class="form-control" id="capacidad" placeholder="20" required>
-                                </div> -->
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Descripción actividades*</label>
                                     <textarea class="form-control" id="descripcion" name="descripcion" rows="4" placeholder="Describe los servicios que ofreces..." required></textarea>
@@ -147,11 +143,6 @@ include_once __DIR__ . '/../../layouts/header_administrador.php';
                                     <label class="form-label">Dirección *</label>
                                     <input type="text" name="direccion" class="form-control" id="direccion" placeholder="Calle 123 #45-67" required>
                                 </div>
-                                <!-- <div class="col-md-12 mb-3">
-                                    <label class="form-label">Cobertura *</label>
-                                    <textarea class="form-control" id="cobertura" name="cobertura" rows="3" placeholder="Describe las zonas donde ofreces tus servicios..." required></textarea>
-                                </div> -->
-
                             </div>
                         </div>
 
@@ -207,8 +198,8 @@ include_once __DIR__ . '/../../layouts/header_administrador.php';
                             <i class="fas fa-arrow-left"></i> Anterior
                         </button>
 
-                        <button type="submit" class="btn btn-primary-wizard" id="nextBtn" onclick="changeStep(1)">
-                            Registrar <i class="fas fa-check"></i>
+                        <button class="btn btn-primary-wizard" id="nextBtn">
+                            Siguiente <i class="fas fa-arrow-right"></i>
                         </button>
 
                     </div>
