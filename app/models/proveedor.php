@@ -30,8 +30,9 @@ class Proveedor
             descripcion,
             departamento,
             ciudad,
-            direccion
-        )VALUES(
+            direccion,
+            validado
+        ) VALUES (
             :nombre_empresa,
             :nit_rut,
             :nombre_representante,
@@ -41,7 +42,7 @@ class Proveedor
             :descripcion,
             :departamento,
             :ciudad,
-            :direccion
+            :direccion,
             'activo'
             )";
 
@@ -60,7 +61,7 @@ class Proveedor
 
             return $resultado->execute();
         } catch (PDOException $e) {
-            error_log("Error en proveedro::registrar->" . $e->getMessage());
+            error_log("Error en proveedor::registrar->" . $e->getMessage());
             return false;
         }
     }
